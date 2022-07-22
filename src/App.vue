@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <div  style="text-align: center">
+      <img src="./assets/logo.png">
+    </div>
 <!--    <HelloWorld/>-->
     <ep-editor></ep-editor>
   </div>
