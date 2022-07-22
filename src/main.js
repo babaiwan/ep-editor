@@ -13,9 +13,8 @@ Vue.use(epui)
 Vue.use(EpEditor)
 
 /* eslint-disable no-new */
-const myApp = new Vue({
+new Vue({
   el: '#app',
   components: { App },
   template: '<App/>'
 })
-myApp.use(EpEditor)
