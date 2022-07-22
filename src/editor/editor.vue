@@ -222,7 +222,6 @@ export default {
       this.quill.openHtmlEditor = (html) => {
         this.openHtmlEditor(html)
       }
-      debugger
     },
     hoverTableCell(row, cell) {
       // 清除之前赋予的color

@@ -5,14 +5,17 @@ import App from './App'
 import "ionicons-npm/css/ionicons.css"  // 旧图标库。必须，message等组件及老项目用到了
 import "ep-ui/theme/lib/epui.min.css"   // ep-ui原始样式
 import epui from "ep-ui";
+import EpEditor from './index'
 
 
 Vue.config.productionTip = false
 Vue.use(epui)
+Vue.use(EpEditor)
 
 /* eslint-disable no-new */
-new Vue({
+const myApp = new Vue({
   el: '#app',
   components: { App },
   template: '<App/>'
 })
+myApp.use(EpEditor)

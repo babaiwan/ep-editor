@@ -1,22 +1,11 @@
 # ep-editor
 
-> A Vue.js project
+> extension Editor based on quillJs
 
-## Build Setup
+此项目为源码版本,直接使用下方npm地址
 
+## npm address
 ``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+npm i ep-editor
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-"# ep-editor" 

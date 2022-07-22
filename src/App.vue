@@ -8,12 +8,10 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
-import EpEditor from "./editor/editor";
 
 export default {
   name: 'App',
   components: {
-    EpEditor,
     HelloWorld
   }
 }
