@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    <div  style="text-align: center">
-      <img src="./assets/logo.png">
+    <div class="container">
+      <ep-editor></ep-editor>
     </div>
-<!--    <HelloWorld/>-->
-    <ep-editor></ep-editor>
   </div>
 </template>
 
@@ -27,4 +25,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+  .container{
+    margin-top: 2em;
+    width: 960px;
+    margin: 0 auto;
+  }
 </style>

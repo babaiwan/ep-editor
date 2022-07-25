@@ -115,7 +115,6 @@
             d="M762.88 788.48c-6.826667 0-13.653333-1.706667-18.773333-6.826667L631.466667 669.013333c-10.24-10.24-10.24-25.6 0-35.84s25.6-10.24 35.84 0l112.64 112.64c10.24 10.24 10.24 25.6 0 35.84-3.413333 5.12-10.24 6.826667-17.066667 6.826667z"
             fill="#2c2c2c" p-id="5355"></path></svg>
         </button>
-        <!--        <button @click="getDelta">get</button>-->
       </span>
     </div>
     <div ref="editor"></div>
@@ -277,6 +276,13 @@ export default {
   },
   mounted() {
     this.initialize()
+    this.quill.setContents([{"attributes":{"color":"#ffffff","background":"#f06666"},"insert":" I am snow example! "},
+      {"attributes":{"align":"center","header":1},
+        "insert":"\n"},{"insert":"\n"},
+      {"attributes":{"color":"#353535","background":"#ffffff"},
+        "insert":"W Can a man still be brave if he's afraid? That is the only time a man can be brave. "},
+      {"insert":"\n\n"},{"attributes":{"color":"#353535","background":"#ffffff","bold":true},
+        "insert":"Courage and folly is "},{"attributes":{"color":"#e60000","background":"#ffffff","bold":true},"insert":"always"},{"attributes":{"color":"#353535","background":"#ffffff","bold":true},"insert":" just a fine line."},{"insert":"\n\n"},{"attributes":{"color":"#353535","background":"#ffffff","underline":true},"insert":"There is only one God, and his name is Death. And there is only one thing we say to Death: \"Not today.\""},{"insert":"\n\n"},{"attributes":{"color":"#353535","background":"#ffffff","italic":true},"insert":"Fear cuts deeper than swords."},{"insert":"\n\n\nconst a = 10;"},{"attributes":{"code-block":"plain"},"insert":"\n"},{"insert":"const editorOption = { highlight: text => hljs.highlightAuto(text).value };"},{"attributes":{"code-block":"plain"},"insert":"\n"},{"insert":"\n"},{"attributes":{"color":"#353535","background":"#ffffff"},"insert":"Every flight begins with a fall."},{"insert":"\n\n"},{"attributes":{"linkBlock":"https://surmon.me/","background":"transparent","color":"#e60000","underline":true},"insert":"A ruler who hides behind paid executioners soon forgets what death is. "},{"insert":"\n\n\n"},{"attributes":{"color":"#353535","background":"#ffffff"},"insert":"Hear my words, and bear witness to my vow. Night gathers, and now my watch begins. It shall not end until my death. I shall take no wife, hold no lands, father no children. I shall wear no crowns and win no glory. I shall live and die at my post. I am the sword in the darkness. I am the watcher on the walls. I am the fire that burns against the cold, the light that brings the dawn, the horn that wakes the sleepers, the shield that guards the realms of men. I pledge my life and honor to the Night’s Watch, for this night and all the nights to come."},{"insert":"\n\n"},{"insert":{"HtmlEmbed":"<div>\n  <span>青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</span>\n  <div style=\"display: block;height: 1px;width: 100%;margin: 1px 0px;background:grey\"></div>\n  <span>少量的邪恶足以抵消全部高贵的品质, 害得人声名狼藉</span>\n</div>"}},{"insert":"\n\n"}])
   }
 }
 </script>
