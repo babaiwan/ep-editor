@@ -3,6 +3,7 @@ import DefaultOptions from './DefaultOptions';
 import {DisplaySize} from './modules/DisplaySize';
 import {Toolbar} from './modules/Toolbar';
 import {Resize} from './modules/Resize';
+import Quill from 'quill'
 
 const knownModules = {DisplaySize, Toolbar, Resize};
 
@@ -84,8 +85,12 @@ export default class ImageResize {
       this.hide();
     }
   };
-  handleClick = (evt) => {
+  handleClick = (evt, val) => {
     if (evt.target && evt.target.tagName && evt.target.tagName.toUpperCase() === 'IMG') {
+
+      this.imgBlot = Quill.find(evt.target)
+      this.imgIndex = this.quill.getIndex(this.imgBlot)
+
       if (this.img === evt.target) {
         // we are already focused on this image
         return;
@@ -105,11 +110,14 @@ export default class ImageResize {
   show = (img) => {
     // keep track of this img element
     this.img = img;
-
     this.showOverlay();
 
     this.initializeModules();
   };
+
+  getImageIndex = () =>{
+    return this.imgIndex
+  }
 
   showOverlay = () => {
     if (this.overlay) {
@@ -174,6 +182,8 @@ export default class ImageResize {
     this.hideOverlay();
     this.removeModules();
     this.img = undefined;
+    this.imgIndex = undefined
+    this.imgBlot = undefined
   };
 
   setUserSelect = (value) => {

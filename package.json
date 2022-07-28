@@ -1,6 +1,6 @@
 {
   "name": "ep-editor",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "extension of quillJs",
   "author": "八百万 <2547062163@qq.com>",
   "private": false,
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "ep-ui": "^2.8.56",
+    "markerjs-live": "^1.0.2",
     "monaco-editor": "^0.21.3",
     "monaco-editor-webpack-plugin": "^2.1.0",
     "parchment": "^2.0.0-dev.3",
