@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import EpEditor from "./editor/editor";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    EpEditor
   }
 }
 </script>
@@ -28,7 +28,7 @@ export default {
 
   .container{
     margin-top: 2em;
-    width: 960px;
+    width: 920px;
     margin: 0 auto;
   }
 </style>
