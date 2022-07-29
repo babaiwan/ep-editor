@@ -1,6 +1,18 @@
 <template>
   <div class="quill-editor">
     <div ref="toolbar">
+       <span class="ql-formats">
+        <select class="ql-font">
+          <option selected></option>
+          <option value="宋体"></option>
+          <option value="黑体"></option>
+          <option value="微软雅黑"></option>
+          <option value="楷体"></option>
+          <option value="仿宋_GB2312"></option>
+          <option value="幼圆"></option>
+          <option value="仿宋"></option>
+        </select>
+      </span>
       <span class="ql-formats">
         <select class="ql-header">
           <option selected>正文</option>
@@ -115,7 +127,7 @@
             d="M762.88 788.48c-6.826667 0-13.653333-1.706667-18.773333-6.826667L631.466667 669.013333c-10.24-10.24-10.24-25.6 0-35.84s25.6-10.24 35.84 0l112.64 112.64c10.24 10.24 10.24 25.6 0 35.84-3.413333 5.12-10.24 6.826667-17.066667 6.826667z"
             fill="#2c2c2c" p-id="5355"></path></svg>
         </button>
-        <button @click="getDleta">get</button>
+        <button @click="getDleta">Delta</button>
       </span>
     </div>
     <div ref="editor"></div>

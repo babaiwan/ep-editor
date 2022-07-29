@@ -2,6 +2,9 @@ import QuillBetterTable from './editorComponent/Table/quill-better-table'
 import ImageResize from './editorComponent/ImageResize/ImageResize'
 import HtmlManager from "./editorComponent/HtmlManager/htmlManager";
 import {Scope, StyleAttributor} from 'parchment'
+import {registerFontSize} from "./editorComponent/Font/fontSize";
+import {registerFontFamily} from "./editorComponent/Font/fontFamily";
+import {MSWORD_MATCHERS} from "./editorComponent/ClipBoard/matcher";
 
 
 export function cloneObj (obj) {
@@ -76,13 +79,6 @@ function registerTable (Quill) {
   Quill.register({'modules/better-table': QuillBetterTable}, true)
 }
 
-
-function registerFontSize (Quill) {
-  // 注册formater 方法，该方法调用register对字体进行format
-  var Size = Quill.import('formats/size')
-  Size.whitelist = [false, '12px', '16px', '20px', '22px', '30px']
-  Quill.register(Size, true)
-}
 
 function registerImageResize (Quill) {
   Quill.register('modules/imageResize', ImageResize)
@@ -264,7 +260,10 @@ export const options = {
         }
       }
     },
-    htmlManager: true
+    htmlManager: true,
+    clipboard: {
+      matchers: MSWORD_MATCHERS
+    }
   },
   placeholder: '',
   readOnly: false
@@ -272,6 +271,7 @@ export const options = {
 
 export function registerPlugin (Quill) {
   registerFontSize(Quill)
+  registerFontFamily(Quill)
   registerImageResize(Quill)
   registerHtmlManager(Quill)
   registerScriptBlock(Quill)
