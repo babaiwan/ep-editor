@@ -1589,3 +1589,49 @@
 .addTable:hover{
   cursor: pointer;
 }
+
+.ql-text-indent-1{
+  text-indent:21pt
+}
+.ql-text-indent-2{
+  text-indent:42pt
+}
+.ql-text-indent-3{
+  text-indent:63pt
+}
+.ql-text-indent-4{
+  text-indent:84pt
+}
+.ql-text-indent-5{
+  text-indent:105pt
+}
+.ql-text-indent-6{
+  text-indent:126pt
+}
+.ql-text-indent-7{
+  text-indent:147pt
+}
+.ql-text-indent-8{
+  text-indent:168pt
+}
+.ql-text-indent-9{
+  text-indent:189pt
+}
+.ql-text-indent-10{
+  text-indent:210pt
+}
+.ql-text-indent-11{
+  text-indent:231pt
+}
+.ql-text-indent-12{
+  text-indent:252pt
+}
+.ql-text-indent-13{
+  text-indent:273pt
+}
+.ql-text-indent-14{
+  text-indent:294pt
+}
+.ql-text-indent-15{
+  text-indent:315pt
+}

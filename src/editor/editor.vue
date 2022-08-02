@@ -63,6 +63,16 @@
         <button class="ql-formula" type="button"></button>
         <button class="ql-indent" value="+1" type="button"></button>
         <button class="ql-indent" value="-1" type="button"></button>
+        <button class="ql-text-indent" value="+1" type="button" style="vertical-align: 12%;">
+          <div style="height: 12px;vertical-align: 12%;">
+            <img style=" width: auto;height: auto;max-width: 100%;max-height: 100%;" src="../assets/textIndent-left.png">
+          </div>
+        </button>
+        <button class="ql-text-indent" value="-1" type="button" style="vertical-align: 12%;">
+          <div style="height: 12px;">
+            <img style=" width: auto;height: auto;max-width: 100%;max-height: 100%;" src="../assets/textIndent-right.png">
+          </div>
+        </button>
         <button class="ql-blockquote"></button>
         <button class="ql-code-block"></button>
         <ep-popover

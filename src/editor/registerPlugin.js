@@ -5,6 +5,7 @@ import {Scope, StyleAttributor} from 'parchment'
 import {registerFontSize} from "./editorComponent/Font/fontSize";
 import {registerFontFamily} from "./editorComponent/Font/fontFamily";
 import {MSWORD_MATCHERS} from "./editorComponent/ClipBoard/matcher";
+import {registerTextIndent} from "./editorComponent/TextIndent/textIndent";
 
 
 export function cloneObj (obj) {
@@ -270,6 +271,7 @@ export const options = {
 }
 
 export function registerPlugin (Quill) {
+  registerTextIndent(Quill)
   registerFontSize(Quill)
   registerFontFamily(Quill)
   registerImageResize(Quill)

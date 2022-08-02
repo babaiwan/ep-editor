@@ -1,6 +1,8 @@
 <template>
   <ep-modal size="small" v-model="previewModal" :before-close="closePreviewModal">
-    <div v-html="htmlContent"></div>
+    <div class="ql-editor">
+      <div v-html="htmlContent"></div>
+    </div>
   </ep-modal>
 </template>
 
