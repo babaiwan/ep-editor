@@ -299,6 +299,7 @@ export default {
         .delete(1)
         .insert({'HtmlEmbed': val})
       );
+      this.quill.htmlManager.hideOverlay()
     }
   },
   mounted() {
