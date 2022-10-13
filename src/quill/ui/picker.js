@@ -43,7 +43,7 @@ class Picker {
   }
 
   buildItem(option) {
-    const item = document.createElement('span');
+    const item = document.createElement('div');
     item.tabIndex = '0';
     item.setAttribute('role', 'button');
     item.classList.add('ql-picker-item');

@@ -1,7 +1,6 @@
 import alignLeftIcon from '../assets/icons/align-left.svg';
 import alignCenterIcon from '../assets/icons/align-center.svg';
 import alignRightIcon from '../assets/icons/align-right.svg';
-import alignJustifyIcon from '../assets/icons/align-justify.svg';
 import backgroundIcon from '../assets/icons/background.svg';
 import blockquoteIcon from '../assets/icons/blockquote.svg';
 import boldIcon from '../assets/icons/bold.svg';
@@ -32,10 +31,9 @@ import videoIcon from '../assets/icons/video.svg';
 
 export default {
   align: {
-    '': alignLeftIcon,
+    left: alignLeftIcon,
     center: alignCenterIcon,
-    right: alignRightIcon,
-    justify: alignJustifyIcon,
+    right: alignRightIcon
   },
   background: backgroundIcon,
   blockquote: blockquoteIcon,

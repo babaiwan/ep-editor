@@ -52,7 +52,11 @@
       <span class="ql-formats">
         <button class="ql-image" value="image"></button>
         <button class="ql-video" value="video"></button>
-        <!--        <select class="ql-align"></select>-->
+        <select class="ql-align">
+          <option selected value="left"></option>
+          <option  value="center"></option>
+          <option  value="right"></option>
+        </select>
         <button class="ql-formula" type="button"></button>
         <button class="ql-indent" value="+1" type="button"></button>
         <button class="ql-indent" value="-1" type="button"></button>

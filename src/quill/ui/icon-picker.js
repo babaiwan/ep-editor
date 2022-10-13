@@ -6,7 +6,12 @@ class IconPicker extends Picker {
     this.container.classList.add('ql-icon-picker');
     Array.from(this.container.querySelectorAll('.ql-picker-item')).forEach(
       item => {
-        item.innerHTML = icons[item.getAttribute('data-value') || ''];
+        if (icons[item.getAttribute('data-value')].startsWith('data:image/svg+xml;base64,')){
+          item.innerHTML = `<img src=${icons[item.getAttribute('data-value')]}
+            style="background-image: url("${icons[item.getAttribute('data-value')]}")">`
+        }else{
+          item.innerHTML = icons[item.getAttribute('data-value') || ''];
+        }
       },
     );
     this.defaultItem = this.container.querySelector('.ql-selected');
