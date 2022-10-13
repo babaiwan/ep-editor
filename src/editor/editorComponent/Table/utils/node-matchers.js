@@ -1,4 +1,4 @@
-import Quill from 'quill'
+import Quill from "../../../../quill/core/quill";
 import { _omit, convertToHex } from './index'
 
 const Delta = Quill.import('delta')
@@ -15,7 +15,7 @@ export function matchTableCell (node, delta, scroll) {
   const cellId = cells.indexOf(node) + 1;
   const colspan = node.getAttribute('colspan') || false
   const rowspan = node.getAttribute('rowspan') || false
-  const cellBg = node.getAttribute('data-cell-bg') || node.style.backgroundColor // The td from external table has no 'data-cell-bg' 
+  const cellBg = node.getAttribute('data-cell-bg') || node.style.backgroundColor // The td from external table has no 'data-cell-bg'
 
   // bugfix: empty table cells copied from other place will be removed unexpectedly
   if (delta.length() === 0) {
@@ -56,7 +56,7 @@ export function matchTableCell (node, delta, scroll) {
 
     return newDelta
   }, new Delta())
-  
+
   return delta.reduce((newDelta, op) => {
     if (op.insert && typeof op.insert === 'string' &&
       op.insert.startsWith('\n')) {
@@ -81,7 +81,7 @@ export function matchTableCell (node, delta, scroll) {
         ))
       }
     }
-    
+
     return newDelta
   }, new Delta())
 }
@@ -140,7 +140,7 @@ export function matchTableHeader (node, delta, scroll) {
     } else {
       newDelta.insert(op.insert, op.attributes)
     }
-    
+
     return newDelta
   }, new Delta())
 
@@ -188,20 +188,20 @@ export function matchTable (node, delta, scroll) {
     for (let i = 0; i < maxCellsNumber - colsNumber; i++) {
       newColDelta.insert('\n', { 'table-col': true })
     }
-    
+
     if (colsNumber === 0) return newColDelta.concat(delta)
 
     let lastNumber = 0
     return delta.reduce((finalDelta, op) => {
       finalDelta.insert(op.insert, op.attributes)
-  
+
       if (op.attributes && op.attributes['table-col']) {
         lastNumber += op.insert.length
         if (lastNumber === colsNumber) {
           finalDelta = finalDelta.concat(newColDelta)
         }
       }
-  
+
       return finalDelta
     }, new Delta())
   }

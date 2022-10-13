@@ -1,5 +1,5 @@
-import Module from 'quill/core/module'
-import Quill from 'quill'
+import Module from "../../../quill/core/module";
+import Quill from "../../../quill/core/quill";
 import HtmlEmbed from "./modules/htmlEmbed";
 import {Toolbar} from "./modules/Toolbar";
 

@@ -1,5 +1,5 @@
-import Quill from "quill"
-import { 
+import Quill from "../../../../quill/core/quill";
+import {
   TableCell,
   TableCellLine,
   CELL_IDENTITY_KEYS,

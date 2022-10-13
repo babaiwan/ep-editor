@@ -1,4 +1,4 @@
-import Quill from 'quill'
+import Quill from "../../../quill/core/quill";
 import TableColumnTool from './modules/table-column-tool'
 import TableSelection from './modules/table-selection'
 import TableOperationMenu from './modules/table-operation-menu'

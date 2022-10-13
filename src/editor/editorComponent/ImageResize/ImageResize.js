@@ -3,7 +3,7 @@ import DefaultOptions from './DefaultOptions';
 import {DisplaySize} from './modules/DisplaySize';
 import {Toolbar} from './modules/Toolbar';
 import {Resize} from './modules/Resize';
-import Quill from 'quill'
+import Quill from "../../../quill/core/quill";
 
 const knownModules = {DisplaySize, Toolbar, Resize};
 

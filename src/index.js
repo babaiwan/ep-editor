@@ -1,4 +1,5 @@
 import EpEditor from './editor/editor'
+
 const components = [
   EpEditor
 ]

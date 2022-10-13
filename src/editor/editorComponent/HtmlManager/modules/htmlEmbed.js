@@ -1,4 +1,4 @@
-import Quill from 'quill'
+import Quill from "../../../../quill/core/quill";
 const embed = Quill.import('blots/block/embed')
 
 class HtmlEmbed extends embed{
