@@ -18,6 +18,7 @@
     "monaco-editor": "^0.21.3",
     "monaco-editor-webpack-plugin": "^2.1.0",
     "parchment": "^2.0.0-dev.3",
+    "quill": "^2.0.0-dev.4",
     "quill-delta": "^4.2.2",
     "vcolorpicker": "^1.1.0",
     "vue": "^2.5.2",
