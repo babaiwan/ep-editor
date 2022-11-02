@@ -127,7 +127,7 @@
         <button class="ql-indent" value="+1" type="button"></button>
         <button class="ql-indent" value="-1" type="button"></button>
         <button class="ql-text-indent" value="+1" type="button">
-          <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <svg style="transform:scale(-1,1)" width="16" height="16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
            <g>
             <title>Layer 1</title>
             <image stroke="null" x="1" y="1" width="16" height="16" id="svg_1"
@@ -175,31 +175,6 @@
           </a>
         </ep-popover>
           </ep-dropdown-item>
-          <ep-dropdown-item item-key="javaScript">
-            <ep-popover
-                ref="codeEditPopover"
-                placement="right"
-                width="400"
-                trigger="click" @show="showCodeEditor" @hide="closeCodeEditor">
-            <div style="height: 260px">
-              <div style="font-size: 13px">javascript 代码编辑器(可以插入javascript代码段</div>
-              <code-editor
-                  v-if="javaScriptCodeEditorModal"
-                  language="javascript" ref="javaScriptEditor"
-                  :min-height="200" :max-height="400"
-                  :codes="javascriptCode"
-                  @update:codes="handleUpdateJavaScript">
-              </code-editor>
-            <div style="margin-top: 15px;">
-              <ep-button type="primary" size="small" @click="insertScriptBlock">确认</ep-button>
-              <ep-button size="small" @click="closeCodeEditor">取消</ep-button>
-            </div>
-          </div>
-          <a slot="reference" style="color: #06c">
-            插入javascript
-          </a>
-        </ep-popover>
-          </ep-dropdown-item>
           <ep-dropdown-item item-key="text-normal-divider">
             <font color="#06c">
               普通分割线
@@ -242,6 +217,12 @@
     >
     </preview-modal>
 
+    <create-link
+      :create-link-modal="createLinkModal"
+      @insertLink="insertLink"
+    >
+    </create-link>
+
   </div>
 </template>
 
@@ -257,6 +238,8 @@ Vue.use(vcolorpicker)
 import _Quill from 'quill'
 import HtmlModal from "./htmlModal/htmlModal";
 import PreviewModal from "./component/previewModal";
+import CreateLink from "./createLink/createLink";
+import CodeEditor from "./component/codeEditor";
 const Quill = window.Quill || _Quill
 initEpEditor(Quill)
 
@@ -288,7 +271,7 @@ if (typeof Object.assign != 'function') {
 // export
 export default {
   name: 'epEditor',
-  components: {PreviewModal, HtmlModal},
+  components: {CodeEditor, CreateLink, PreviewModal, HtmlModal},
   data() {
     return {
       lineNumber: 1,
@@ -313,6 +296,7 @@ export default {
       previewModal:false,
       previewHtml:'',
 
+      createLinkModal:false
     }
   },
   props: {
@@ -536,7 +520,7 @@ export default {
       this.quill.insertEmbed(range.index, 'HtmlEmbed', html)
     },
     insertJournalLink() {
-      console.log('click insert link')
+      this.createLinkModal = true
       // this.$emit('insertJournalLink')
     },
     deleteFormat() {
@@ -575,21 +559,14 @@ export default {
     handleUpdateJavaScript(val) {
       this.javascriptCode = val
     },
-    showCodeEditor() {
-      this.javaScriptCodeEditorModal = true
-      this.javascriptCode = ''
-    },
-    closeCodeEditor() {
-      this.javaScriptCodeEditorModal = false
-      this.javascriptCode = ''
-      this.$refs.codeEditPopover.showPopper = false
-    },
-    insertScriptBlock() {
-      this.$emit('insertScriptBlock', this.javascriptCode)
-      this.closeCodeEditor()
+    insertLink(val){
+      let range = this.quill.getSelection(true)
+      this.quill.insertText(range, val.linkName, 'link', val.linkUrl, Quill.sources.USER)
+      this.createLinkModal = false
     },
     insertHtml() {
-      this.$emit('insertHtmlBlock', this.htmlCode)
+      let range = this.quill.getSelection(true)
+      this.quill.insertEmbed(range.index, 'HtmlEmbed', this.htmlCode)
     },
     openHtmlModal(html) {
       this.editHtmlContent = html

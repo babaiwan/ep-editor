@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import EpEditor from "./editor/editor";
+import epEditor from "./ep-editor/epEditor";
 
 export default {
   name: 'App',
   components: {
-    EpEditor
+    epEditor
   }
 }
 </script>

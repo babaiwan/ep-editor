@@ -11,10 +11,11 @@
 </template>
 
 <script>
-import CodeEditor from "../Component/code-editor";
 export default {
   name: "htmlEditModal",
-  components: {CodeEditor},
+  components: {
+    CodeEditor: () => import ('../component/codeEditor')
+  },
   props: {
     htmlEditModal: Boolean,
     htmlContent: String
@@ -41,5 +42,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

@@ -99,7 +99,7 @@
     content: '5';
 }
 .ql-snow .ql-picker.ql-lineHeight {
-    width: 70px;
+    width: 125px;
 }
 
 .ql-snow .ql-picker {
@@ -791,6 +791,7 @@
     transform: translateY(-10px);
 }
 .ql-snow .ql-formats {
+    min-width: 130px;
     height: 24px;
     display: inline-block;
     vertical-align: middle;
@@ -984,7 +985,7 @@
     content: attr(data-label);
 }
 .ql-snow .ql-picker.ql-header {
-    width: 112px;
+    width: 125px;
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item::before {
@@ -1033,7 +1034,7 @@
     font-size: 0.67em;
 }
 .ql-snow .ql-picker.ql-font {
-    width: 112px;
+    width: 125px;
 }
 .ql-snow .ql-picker.ql-font .ql-picker-label::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
@@ -1054,7 +1055,7 @@
     font-family: Monaco, Courier New, monospace;
 }
 .ql-snow .ql-picker.ql-size {
-    width: 98px;
+    width: 125px;
 }
 .ql-snow .ql-picker.ql-size .ql-picker-label::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item::before {

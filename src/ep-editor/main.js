@@ -9,7 +9,7 @@ import {registerLineHeight} from "./LineHeight/lineHeight"
 import {registerTextIndent} from "./Indent/Indent";
 import ImageUploader from "./ImageUploader/quill.imageUploader";
 import {registerImageBlot} from './ImageUploader/loadingImage';
-import {upload} from "../../api";
+// import {upload} from "../../api";
 
 function registerImageUploader(Quill) {
     Quill.register("modules/imageUploader", ImageUploader);
@@ -210,12 +210,15 @@ export const options = {
                         if (!files) {
                             this.$pop('请选择文件')
                         } else {
-                            upload({
-                                fileName: fileName,
-                                fileContent: fileString
-                            }).then(json => {
-                                resolve(json.data)
-                            })
+                            // upload({
+                            //     fileName: fileName,
+                            //     fileContent: fileString
+                            // }).then(json => {
+                            //     resolve(json.data)
+                            // })
+                          setTimeout(_=>{
+                            resolve(fileString)
+                          },2000)
                         }
                     }
                 });
