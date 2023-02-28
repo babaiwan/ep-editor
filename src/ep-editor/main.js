@@ -142,8 +142,12 @@ var bindings = {
   // This will overwrite the default binding also named 'tab'
   delete: {
     key: 'Delete',
-    handler: function () {
-      console.log('do nothing')
+    handler: function (range, context) {
+      if (context.line.statics.blotName === 'table-cell-line'){
+        return false
+      }else{
+        return true
+      }
     }
   }
 }
