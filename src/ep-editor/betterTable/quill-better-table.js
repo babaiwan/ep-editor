@@ -126,38 +126,22 @@ class BetterTable extends Module {
     // add keyboard binding：Backspace
     // prevent user hits backspace to delete table cell
     quill.keyboard.addBinding(
-        { key: 'Backspace' },
-        {},
-        function (range, context) {
-          if (range.index === 0 || this.quill.getLength() <= 1) return true;
-          const [line] = this.quill.getLine(range.index);
-          if (context.offset === 0) {
-            const [prev] = this.quill.getLine(range.index - 1);
-            const [next] = this.quill.getLine(range.index + 1);
-            if (prev != null) {
-              if (prev.statics.blotName === 'table-cell-line'){   // 处理的是table
-                if (line.statics.blotName === 'table-cell-line' && next.statics.blotName == 'block'){
-                  if (line.prev !== null && line.prev.statics.blotName == 'table-cell-line'){  //table tr内存在需要删除的东西
-                    return true
-                  }else{// 否则，不删除tr元素 在table外部 选中该table
-                    return false
-                  }
-                }else{  // 选中table
-                  if (prev.parent.parent !== undefined){
-                    let tableDom = prev.parent.parent.parent
-                    let tableStartIndex = this.quill.getIndex(tableDom)
-                    this.quill.setSelection(tableStartIndex-1,range.index - tableStartIndex + 1,"api")
-                    return false
-                  }else{
-                    return false
-                  }
-                }
-              }else{
-                return true
-              }
+      {key: 'Backspace'},
+      {},
+      function (range, context) {
+        if (range.index === 0 || this.quill.getLength() <= 1) {
+          return true;
+        }
+        const [line] = this.quill.getLine(range.index);
+        if (context.offset === 0) {
+          const [prev] = this.quill.getLine(range.index - 1);
+          if (prev != null) {
+            if ((prev.domNode.dataset.cell !== line.domNode.dataset.cell) || (prev.domNode.dataset.row !== line.domNode.dataset.row)) {
+              return false;
             }
           }
-          return true
+        }
+        return true
       })
     // since only one matched bindings callback will excute.
     // expected my binding callback excute first
