@@ -23,6 +23,7 @@ import {
   TableBody,
   TableContainer,
   TableViewWrapper,
+  TableResizer,
   rowId,
   cellId
 } from './formats/table';
@@ -37,7 +38,7 @@ class BetterTable extends Module {
     Quill.register(TableBody, true);
     Quill.register(TableContainer, true);
     Quill.register(TableViewWrapper, true);
-    Quill.register(TableViewWrapper, true);
+    Quill.register(TableResizer, true);
     // register customized Header，overwriting quill built-in Header
     // Quill.register('formats/header', Header, true);
   }
@@ -183,7 +184,7 @@ class BetterTable extends Module {
     const table = row.table();
     return [table, row, cell, offset];
   }
-  
+
   getTableSelection(blot){
     if (blot.statics.blotName === 'table-view'){
       return blot;
