@@ -648,7 +648,7 @@ export default {
         // Emit ready event
         this.$emit('ready', this.quill)
       }
-      this.initContent()
+      // this.initContent()
     },
     hoverTableCell(row, cell) {
       // 清除之前赋予的color
