@@ -1,8 +1,7 @@
 <h1 id="quickstart">Demo</h1>
-http://43.142.94.110/
+
+基于vue版本的quill 集成和增强了大部分的模块 可以作为学习quill的参考资料
 
 
-基于vue版本的quill 支持了表格，自定义html，图片缩放，html编辑等功能
+![image](https://github.com/babaiwan/ep-editor/assets/50008615/563e1ebe-a28a-43ba-861a-47feb82c727d)
 
-
-![image](https://user-images.githubusercontent.com/50008615/199496538-52c7984b-779e-49db-8529-dd2836c64c69.png)
