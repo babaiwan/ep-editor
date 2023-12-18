@@ -8,7 +8,7 @@
       </a>
     </div>
 
-    <div class="container">
+    <div class="main-container">
       <ep-editor></ep-editor>
     </div>
   </div>
@@ -34,8 +34,7 @@
     margin-top: 20px;
   }
 
-  .container {
-    margin-top: 2em;
+  .main-container {
     width: 920px;
     margin: 0 auto;
   }

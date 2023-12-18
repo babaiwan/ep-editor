@@ -216,27 +216,27 @@
     >
     </preview-modal>
 
-<!--    <create-link-->
-<!--      v-if="createLinkModal"-->
-<!--      :create-link-modal="createLinkModal"-->
-<!--      @insertLink="insertLink"-->
-<!--      @closeCreateLinkModal="closeCreateLinkModal"-->
-<!--    >-->
-<!--    </create-link>-->
+    <create-link
+      v-if="createLinkModal"
+      :create-link-modal="createLinkModal"
+      @insertLink="insertLink"
+      @closeCreateLinkModal="closeCreateLinkModal"
+    >
+    </create-link>
 
-<!--    <upload-docx-modal-->
-<!--      :upload-docx-modal="uploadDocxModal"-->
-<!--      :quill="quill"-->
-<!--      @closeDocxModal="closeDocxModal"-->
-<!--    >-->
-<!--    </upload-docx-modal>-->
+    <upload-docx-modal
+      :upload-docx-modal="uploadDocxModal"
+      :quill="quill"
+      @closeDocxModal="closeDocxModal"
+    >
+    </upload-docx-modal>
 
-<!--    <convert-pdf2-html-modal-->
-<!--      :convert-pdf2-html-modal="convertPdf2HtmlModal"-->
-<!--      @closeConvertPdf2HtmlModal="closeConvertPdf2HtmlModal"-->
-<!--      @insertHtmlBlock="changeHtmlContent"-->
-<!--    >-->
-<!--    </convert-pdf2-html-modal>-->
+    <convert-pdf2-html-modal
+      :convert-pdf2-html-modal="convertPdf2HtmlModal"
+      @closeConvertPdf2HtmlModal="closeConvertPdf2HtmlModal"
+      @insertHtmlBlock="changeHtmlContent"
+    >
+    </convert-pdf2-html-modal>
 
   </div>
 </template>
@@ -258,8 +258,9 @@ import HtmlModal from "./htmlModal/htmlModal";
 import PreviewModal from "./component/previewModal";
 import CreateLink from "./createLink/createLink";
 import content from "./content";
-// import UploadDocxModal from "./component/uploadDocxModal";
-// import ConvertPdf2HtmlModal from "./component/convertPdf2HtmlModal";
+import UploadDocxModal from "./component/uploadDocxModal";
+import ConvertPdf2HtmlModal from "./component/convertPdf2HtmlModal";
+import CodeEditor from "./component/code-editor";
 
 Vue.use(vcolorpicker)
 Vue.use(Viewer, {
@@ -298,7 +299,7 @@ if (typeof Object.assign != 'function') {
 // export
 export default {
   name: 'epEditor',
-  components: {CreateLink, PreviewModal, HtmlModal},
+  components: {CodeEditor, ConvertPdf2HtmlModal, UploadDocxModal, CreateLink, PreviewModal, HtmlModal},
   data() {
     return {
       htmlInsertPopover: false,
@@ -357,6 +358,15 @@ export default {
     delete this.quill
   },
   methods: {
+    closeDocxModal() {
+      this.uploadDocxModal = false
+    },
+    closeConvertPdf2HtmlModal() {
+      this.convertPdf2HtmlModal = false
+    },
+    closeCreateLinkModal() {
+      this.createLinkModal = false
+    },
     handleItemClick(val) {
       let html = ''
       switch (val) {
@@ -602,6 +612,7 @@ export default {
     insertHtml() {
       let range = this.quill.getSelection(true)
       this.quill.insertEmbed(range.index, 'HtmlEmbed', this.htmlCode)
+      this.htmlInsertPopover = false
     },
     openHtmlModal(html) {
       this.editHtmlContent = html
@@ -669,12 +680,6 @@ export default {
         this.quill.viewImage = (Image) =>{
           this.viewImage(Image)
         }
-
-        // console.log('init done')
-        // console.log(this.quill)
-        //
-        // // clear uploader event
-        // this.quill.uploader.DEFAULTS.mimetypes = []
 
         // Emit ready event
         this.$emit('ready', this.quill)

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {convertDocxToHtml} from "../../../api";
+// import {convertDocxToHtml} from "../../../api";
 
 export default {
   name: "uploadDocxModal",
@@ -33,14 +33,14 @@ export default {
       this.$emit('closeDocxModal')
     },
     customUpload(files, data) {
-      let file = files[0]
-      const formData = new FormData();
-      formData.append('file', file);
-      convertDocxToHtml(formData).then(response => {
-        this.processStream(response);
-      }).catch(error => console.error('Error:', error)).finally(_ => {
-        this.loading = false
-      });
+      // let file = files[0]
+      // const formData = new FormData();
+      // formData.append('file', file);
+      // convertDocxToHtml(formData).then(response => {
+      //   this.processStream(response);
+      // }).catch(error => console.error('Error:', error)).finally(_ => {
+      //   this.loading = false
+      // });
     },
     async processStream(response) {
       const reader = response.body.getReader();

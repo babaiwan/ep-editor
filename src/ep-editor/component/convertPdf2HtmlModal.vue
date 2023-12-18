@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {convertPdf2Html} from "../../../api";
+// import {convertPdf2Html} from "../../../api";
 
 export default {
   name: "convertPdf2HtmlModal",
@@ -40,25 +40,25 @@ export default {
       const file = files[0]; // 获取选择的文件
 
       if (file) {
-        const formData = new FormData(); // 创建一个FormData对象
-        formData.append('file', file); // 将文件添加到FormData中
-        this.loading = true
-        convertPdf2Html(formData).then(response => {
-          const reader = response.body.getReader();
-          return reader.read();
-        }).then(data => {
-          const html = new TextDecoder().decode(data.value);
-          // 插入到文档中
-          this.$emit('insertHtmlBlock', html)
-          this.closeCoverImageModal()
-          this.$pop({
-            message: '插入成功!',
-            type: 'success'
-          })
-          // 在这里你可以根据后端返回的字符串做相应的处理
-        }).catch(error => console.error('Error:', error)).finally(_ => {
-          this.loading = false
-        });
+        // const formData = new FormData(); // 创建一个FormData对象
+        // formData.append('file', file); // 将文件添加到FormData中
+        // this.loading = true
+        // convertPdf2Html(formData).then(response => {
+        //   const reader = response.body.getReader();
+        //   return reader.read();
+        // }).then(data => {
+        //   const html = new TextDecoder().decode(data.value);
+        //   // 插入到文档中
+        //   this.$emit('insertHtmlBlock', html)
+        //   this.closeCoverImageModal()
+        //   this.$pop({
+        //     message: '插入成功!',
+        //     type: 'success'
+        //   })
+        //   // 在这里你可以根据后端返回的字符串做相应的处理
+        // }).catch(error => console.error('Error:', error)).finally(_ => {
+        //   this.loading = false
+        // });
       }
     },
   },
