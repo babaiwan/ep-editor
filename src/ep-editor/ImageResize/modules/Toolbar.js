@@ -78,7 +78,7 @@ export class Toolbar extends BaseModule {
 		this._initSizeInput(innerDiv)
 		// this._initResizerButton(innerDiv)
 		// this._initEditButton(innerDiv)
-		this._initMarkButton(innerDiv)
+		this._initCheckButton(innerDiv,this.resizer.quill)
 		this._initFloatButton(innerDiv)
 
 		container.appendChild(innerDiv)
@@ -238,10 +238,10 @@ export class Toolbar extends BaseModule {
 		domNode.appendChild(borderButton)
 	}
 
-	_initMarkButton = (domNode) => {
-		const markButton = document.createElement('a')  // 标注按钮
-		markButton.innerHTML = '标注'
-		markButton.style = '    box-sizing: border-box;\n' +
+	_initCheckButton = (domNode,quill) => {
+		const checkButton = document.createElement('a')  // 标注按钮
+		checkButton.innerHTML = '查看'
+		checkButton.style = '    box-sizing: border-box;\n' +
 			'    background: #f5f5f5;\n' +
 			'    border: 1px solid #ccc;\n' +
 			'    border-radius: 3.01px;\n' +
@@ -261,9 +261,11 @@ export class Toolbar extends BaseModule {
 			'    white-space: nowrap;\n' +
 			'    float:left;\n' +
 			'    margin-right: 10px;'
+		domNode.appendChild(checkButton)
 
-
-		domNode.appendChild(markButton)
+		checkButton.addEventListener('click', () => {
+			quill.viewImage(this.resizer.getImage())
+		})
 	}
 
 	_initFloatButton = (domNode) => {

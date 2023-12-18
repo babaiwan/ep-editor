@@ -14,200 +14,204 @@ const knownModules = {DisplaySize, Toolbar, Resize};
  */
 export default class ImageResize {
 
-	constructor(quill, options = {}) {
-		// save the quill reference and options
-		this.quill = quill;
+    constructor(quill, options = {}) {
+        // save the quill reference and options
+        this.quill = quill;
 
-		// Apply the options to our defaults, and stash them for later
-		// defaultsDeep doesn't do arrays as you'd expect, so we'll need to apply the classes array from options separately
-		let moduleClasses = false;
-		if (options.modules) {
-			moduleClasses = options.modules.slice();
-		}
-		options.delete = this.handleDelete;
-		// Apply options to default options
-		this.options = defaultsDeep({}, options, DefaultOptions);
+        // Apply the options to our defaults, and stash them for later
+        // defaultsDeep doesn't do arrays as you'd expect, so we'll need to apply the classes array from options separately
+        let moduleClasses = false;
+        if (options.modules) {
+            moduleClasses = options.modules.slice();
+        }
+        options.delete = this.handleDelete;
+        // Apply options to default options
+        this.options = defaultsDeep({}, options, DefaultOptions);
 
-		// (see above about moduleClasses)
-		if (moduleClasses !== false) {
-			this.options.modules = moduleClasses;
-		}
+        // (see above about moduleClasses)
+        if (moduleClasses !== false) {
+            this.options.modules = moduleClasses;
+        }
 
-		// disable native image resizing on firefox
-		document.execCommand('enableObjectResizing', false, 'false');
+        // disable native image resizing on firefox
+        document.execCommand('enableObjectResizing', false, 'false');
 
-		// respond to clicks inside the editor
-		this.quill.root.addEventListener('click', this.handleClick, false);
-		this.quill.root.parentNode.style.position = this.quill.root.parentNode.style.position || 'relative';
+        // respond to clicks inside the editor
+        this.quill.root.addEventListener('click', this.handleClick, false);
+        this.quill.root.parentNode.style.position = this.quill.root.parentNode.style.position || 'relative';
 
-		// setup modules
-		this.moduleClasses = this.options.modules;
+        // setup modules
+        this.moduleClasses = this.options.modules;
 
-		this.modules = [];
-	}
+        this.modules = [];
+    }
 
-	initializeModules = () => {
-		this.removeModules();
+    initializeModules = () => {
+        this.removeModules();
 
-		this.modules = this.moduleClasses.map(
-			ModuleClass => new (knownModules[ModuleClass] || ModuleClass)(this),
-		);
+        this.modules = this.moduleClasses.map(
+            ModuleClass => new (knownModules[ModuleClass] || ModuleClass)(this),
+        );
 
-		this.modules.forEach(
-			(module) => {
-				module.onCreate();
-			},
-		);
+        this.modules.forEach(
+            (module) => {
+                module.onCreate();
+            },
+        );
 
-		this.onUpdate();
-	};
+        this.onUpdate();
+    };
 
-	onUpdate = () => {
-		this.repositionElements();
-		this.modules.forEach(
-			(module) => {
-				module.onUpdate();
-			},
-		);
-	};
+    onUpdate = () => {
+        this.repositionElements();
+        this.modules.forEach(
+            (module) => {
+                module.onUpdate();
+            },
+        );
+    };
 
-	removeModules = () => {
-		this.modules.forEach(
-			(module) => {
-				module.onDestroy();
-			},
-		);
+    removeModules = () => {
+        this.modules.forEach(
+            (module) => {
+                module.onDestroy();
+            },
+        );
 
-		this.modules = [];
-	};
-	handleDelete = () => {
-		if (this.img) {
-			this.hide();
-		}
-	};
-	handleClick = (evt, val) => {
-		if (evt.target && evt.target.tagName && evt.target.tagName.toUpperCase() === 'IMG') {
+        this.modules = [];
+    };
+    handleDelete = () => {
+        if (this.img) {
+            this.hide();
+        }
+    };
+    handleClick = (evt, val) => {
+        if (evt.target && evt.target.tagName && evt.target.tagName.toUpperCase() === 'IMG') {
 
-			this.imgBlot = Quill.find(evt.target)
-			this.imgIndex = this.quill.getIndex(this.imgBlot)
+            this.imgBlot = Quill.find(evt.target)
+            this.imgIndex = this.quill.getIndex(this.imgBlot)
 
-			if (this.img === evt.target) {
-				// we are already focused on this image
-				return;
-			}
-			if (this.img) {
-				// we were just focused on another image
-				this.hide();
-			}
-			// clicked on an image inside the editor
-			this.show(evt.target);
-		} else if (this.img) {
-			// clicked on a non image
-			this.hide();
-		}
-	};
+            if (this.img === evt.target) {
+                // we are already focused on this image
+                return;
+            }
+            if (this.img) {
+                // we were just focused on another image
+                this.hide();
+            }
+            // clicked on an image inside the editor
+            this.show(evt.target);
+        } else if (this.img) {
+            // clicked on a non image
+            this.hide();
+        }
+    };
 
-	show = (img) => {
-		// keep track of this img element
-		this.img = img;
-		this.showOverlay();
+    show = (img) => {
+        // keep track of this img element
+        this.img = img;
+        this.showOverlay();
 
-		this.initializeModules();
-	};
+        this.initializeModules();
+    };
 
-	getImageIndex = () =>{
-		return this.imgIndex
-	}
+    getImage = () => {
+        return this.img
+    }
 
-	showOverlay = () => {
-		if (this.overlay) {
-			this.hideOverlay();
-		}
+    getImageIndex = () => {
+        return this.imgIndex
+    }
 
-		// BUG: scroll top when setSelection method is called
-		// this.quill.setSelection(null);
+    showOverlay = () => {
+        if (this.overlay) {
+            this.hideOverlay();
+        }
 
-		// prevent spurious text selection
-		this.setUserSelect('none');
+        // BUG: scroll top when setSelection method is called
+        // this.quill.setSelection(null);
 
-		// listen for the image being deleted or moved
-		document.addEventListener('keyup', this.checkImage, true);
-		this.quill.root.addEventListener('input', this.checkImage, true);
+        // prevent spurious text selection
+        this.setUserSelect('none');
 
-		// Create and add the overlay
-		this.overlay = document.createElement('div');
-		Object.assign(this.overlay.style, this.options.overlayStyles);
+        // listen for the image being deleted or moved
+        document.addEventListener('keyup', this.checkImage, true);
+        this.quill.root.addEventListener('input', this.checkImage, true);
 
-		this.quill.root.parentNode.appendChild(this.overlay);
+        // Create and add the overlay
+        this.overlay = document.createElement('div');
+        Object.assign(this.overlay.style, this.options.overlayStyles);
 
-		this.repositionElements();
-	};
+        this.quill.root.parentNode.appendChild(this.overlay);
 
-	hideOverlay = () => {
-		if (!this.overlay) {
-			return;
-		}
+        this.repositionElements();
+    };
 
-		// Remove the overlay
-		this.quill.root.parentNode.removeChild(this.overlay);
-		this.overlay = undefined;
+    hideOverlay = () => {
+        if (!this.overlay) {
+            return;
+        }
 
-		// stop listening for image deletion or movement
-		document.removeEventListener('keyup', this.checkImage);
-		this.quill.root.removeEventListener('input', this.checkImage);
+        // Remove the overlay
+        this.quill.root.parentNode.removeChild(this.overlay);
+        this.overlay = undefined;
 
-		// reset user-select
-		this.setUserSelect('');
-	};
+        // stop listening for image deletion or movement
+        document.removeEventListener('keyup', this.checkImage);
+        this.quill.root.removeEventListener('input', this.checkImage);
 
-	repositionElements = () => {
-		if (!this.overlay || !this.img) {
-			return;
-		}
+        // reset user-select
+        this.setUserSelect('');
+    };
 
-		// position the overlay over the image
-		const parent = this.quill.root.parentNode;
-		const imgRect = this.img.getBoundingClientRect();
-		const containerRect = parent.getBoundingClientRect();
+    repositionElements = () => {
+        if (!this.overlay || !this.img) {
+            return;
+        }
 
-		Object.assign(this.overlay.style, {
-			left: `${imgRect.left - containerRect.left - 1 + parent.scrollLeft}px`,
-			top: `${imgRect.top - containerRect.top + parent.scrollTop}px`,
-			width: `${imgRect.width}px`,
-			height: `${imgRect.height}px`,
-		});
-	};
+        // position the overlay over the image
+        const parent = this.quill.root.parentNode;
+        const imgRect = this.img.getBoundingClientRect();
+        const containerRect = parent.getBoundingClientRect();
 
-	hide = () => {
-		this.hideOverlay();
-		this.removeModules();
-		this.img = undefined;
-		this.imgIndex = undefined
-		this.imgBlot = undefined
-	};
+        Object.assign(this.overlay.style, {
+            left: `${imgRect.left - containerRect.left - 1 + parent.scrollLeft}px`,
+            top: `${imgRect.top - containerRect.top + parent.scrollTop}px`,
+            width: `${imgRect.width}px`,
+            height: `${imgRect.height}px`,
+        });
+    };
 
-	setUserSelect = (value) => {
-		[
-			'userSelect',
-			'mozUserSelect',
-			'webkitUserSelect',
-			'msUserSelect',
-		].forEach((prop) => {
-			// set on contenteditable element and <html>
-			this.quill.root.style[prop] = value;
-			document.documentElement.style[prop] = value;
-		});
-	};
+    hide = () => {
+        this.hideOverlay();
+        this.removeModules();
+        this.img = undefined;
+        this.imgIndex = undefined
+        this.imgBlot = undefined
+    };
 
-	checkImage = (evt) => {
-		// 如果正在编辑input输入框 则不触发事件
-		if (document.activeElement.id != 'resizeImageInput') {
-			if (this.img) {
-				if (evt.keyCode == 46 || evt.keyCode == 8) {
-					this.quill.find(this.img).deleteAt(0);
-				}
-				this.hide();
-			}
-		}
-	};
+    setUserSelect = (value) => {
+        [
+            'userSelect',
+            'mozUserSelect',
+            'webkitUserSelect',
+            'msUserSelect',
+        ].forEach((prop) => {
+            // set on contenteditable element and <html>
+            this.quill.root.style[prop] = value;
+            document.documentElement.style[prop] = value;
+        });
+    };
+
+    checkImage = (evt) => {
+        // 如果正在编辑input输入框 则不触发事件
+        if (document.activeElement.id != 'resizeImageInput') {
+            if (this.img) {
+                if (evt.keyCode == 46 || evt.keyCode == 8) {
+                    this.quill.find(this.img).deleteAt(0);
+                }
+                this.hide();
+            }
+        }
+    };
 }

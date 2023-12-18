@@ -23,7 +23,6 @@ import {
   TableBody,
   TableContainer,
   TableViewWrapper,
-  TableResizer,
   rowId,
   cellId
 } from './formats/table';
@@ -38,7 +37,7 @@ class BetterTable extends Module {
     Quill.register(TableBody, true);
     Quill.register(TableContainer, true);
     Quill.register(TableViewWrapper, true);
-    Quill.register(TableResizer, true);
+    Quill.register(TableViewWrapper, true);
     // register customized Header，overwriting quill built-in Header
     // Quill.register('formats/header', Header, true);
   }
@@ -126,19 +125,19 @@ class BetterTable extends Module {
 
     // add keyboard binding：Backspace
     // prevent user hits backspace to delete table cell
+    const KeyBoard = quill.getModule('keyboard')
     let vm = this
     quill.keyboard.addBinding(
         {key: 'Backspace'},
         {},
         function (range, context) {
-          console.log('deleteing cell')
           if (range.index === 0 || this.quill.getLength() <= 1) {
             return true;
           }
           const [line] = this.quill.getLine(range.index);
           if (context.offset === 0) {
             const [prev] = this.quill.getLine(range.index - 1);
-            if (line.static.blotName === 'table-cell-line' ){
+            if (line.static !== undefined && line.static.blotName === 'table-cell-line' ){
               let tableDom = vm.getTableSelection(prev)
               if (tableDom !== undefined){
                 let tableStartIndex = this.quill.getIndex(tableDom)
@@ -255,7 +254,6 @@ BetterTable.keyboardBindings = {
       return true
     },
   },
-
   'table-cell-line delete': {
     key: 'Delete',
     format: ['table-cell-line'],
@@ -263,8 +261,6 @@ BetterTable.keyboardBindings = {
     suffix: /^$/,
     handler() {},
   },
-
-
   'table-cell-line enter': {
     key: 'Enter',
     shiftKey: null,
@@ -299,7 +295,6 @@ BetterTable.keyboardBindings = {
       });
     },
   },
-
   'table-cell-line up': makeTableArrowHandler(true),
   'table-cell-line down': makeTableArrowHandler(false),
   'down-to-table': {

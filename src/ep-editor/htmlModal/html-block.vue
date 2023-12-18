@@ -1,8 +1,7 @@
 <template>
   <div class="html-block">
-    <code-editor language="html"
-                 :min-height="400"
-                 :max-height="400"
+    <code-editor language="html" ref="htmlEditor"
+                 :min-height="400" :max-height="400"
                  :codes="editContent"
                  @update:codes="handleUpdate">
     </code-editor>
@@ -12,9 +11,6 @@
 <script>
 export default {
   name: "html-block",
-  components: {
-    CodeEditor: () => import ('../component/codeEditor')
-  },
   props:['htmlContent'],
   data(){
     return{

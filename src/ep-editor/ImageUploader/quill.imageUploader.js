@@ -1,4 +1,3 @@
-import LoadingImage from "./loadingImage"
 import "./quill.imageUploader.css";
 
 class ImageUploader {
@@ -178,3 +177,7 @@ class ImageUploader {
 
 window.ImageUploader = ImageUploader;
 export default ImageUploader;
+
+export function registerImageUploader(Quill){
+  Quill.register("modules/imageUploader", ImageUploader);
+}

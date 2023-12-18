@@ -1,18 +1,60 @@
 <template>
-  <ep-modal v-model="createLinkModal" :before-close="closeCreateLinkModal" width="840px" title="编辑链接"
-            :wrap-close="false">
+  <ep-modal v-model="createLinkModal"
+            :before-close="closeCreateLinkModal"
+            width="840px"
+            title="编辑链接"
+            :wrap-close="true"
+            append-to-body
+  >
     <div class="body-containter">
       <div class="left-container">
         <ul>
           <li v-for="(item,index) in tabs">
-            <button class="li-btn" @click="changeActiveLi(index)" :class="activeIndex == index? 'selected':''">{{ item
-              }}
-            </button>
+            <button class="li-btn" @click="changeActiveLi(index)" :class="activeIndex == index? 'selected':''">{{ item }}</button>
           </li>
         </ul>
       </div>
       <div class="right-container">
-        <div v-if="activeIndex == 0">
+        <div v-if="activeIndex == 0" style="height: 451px;">
+          <div class="search-container">
+            <div style="display: flex">
+              <ep-input style="width: 300px;" v-model="page.psLike_title"></ep-input>
+              <ep-button type="primary" style="margin-left: 25px;" @click="searchJournal">搜索</ep-button>
+            </div>
+          </div>
+          <div class="table-container">
+            <ep-table :data="journalList"  size="small">
+              <ep-table-item column="title" title="标题" width="300">
+                <template slot-scope="props">
+                  <ep-tag type="primary">{{props.row.id}}</ep-tag>
+                  <a style="color: #3572b0;padding-left:7px" @click="fillLinkName(props.row)">{{props.row.title}}</a>
+                </template>
+              </ep-table-item>
+              <ep-table-item column="owner" title="创建人"></ep-table-item>
+              <ep-table-item column="createTime" title="创建时间">
+                <template slot-scope="props">
+                  {{props.row.createTime == null? '':props.row.createTime.substring(0,10)}}
+                </template>
+              </ep-table-item>
+            </ep-table>
+          </div>
+          <div style="height: 35px">
+            <ep-pager style="float: right" :total-num="page.totalNum" layout="pager" @change="handleChange"></ep-pager>
+          </div>
+          <div class="meta-link">
+            <div style="display: flex; position: absolute;bottom: 10px;left: 115px;">
+              <div style="padding: 5px">
+                链接文字
+              </div>
+              <div style="width: 300px">
+                <ep-input v-model="linkName">
+
+                </ep-input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="activeIndex == 1">
           <ep-form>
             <ep-col :col="20">
               <ep-form-item label="地址">
@@ -42,77 +84,83 @@
 
 <script>
 
-  export default {
-    name: "createLink",
-    props: ['createLinkModal', 'editJournal'],
+export default {
+  name: "createLink",
+  props:['createLinkModal'],
 
-    data() {
-      return {
-        activeIndex: 0,
-        tabs: ['Web链接'],
-        journalList: [],
-        page: {
-          orderBy: 'id,desc',
-          psLike_title: '',
-          totalNum: 100,
-          limit: 10,
-          offset: 1
-        },
+  data(){
+    return{
+      activeIndex:0,
+      tabs:['亿墨文章','Web链接'],
+      journalList:[],
+      page:{
+        orderBy:'id,desc',
+        psLike_title:'',
+        totalNum:100,
+        limit:10,
+        offset:1
+      },
 
-        linkName: '',
-        linkUrl: 'www.google.com'
-      }
+      linkName:'',
+      linkUrl:'www.google.com'
+    }
+  },
+
+  methods:{
+    searchAttachment(){
+
     },
-
-    methods: {
-      doCreateLink() {
-        let data = {
-          linkName: this.linkName,
-          linkUrl: this.linkUrl
-        }
-        this.$emit('insertLink', data)
-        this.closeCreateLinkModal()
-      },
-      cancelCreateLink() {
-        this.linkName = ''
-        this.linkUrl = ''
-        this.closeCreateLinkModal()
-      },
-      handleChange(val) {
-        this.page.offset = val
+    doCreateLink(){
+      let data = {
+        linkName:this.linkName,
+        linkUrl:this.linkUrl
+      }
+      this.$emit('insertLink',data)
+      this.closeCreateLinkModal()
+    },
+    cancelCreateLink(){
+      this.linkName = ''
+      this.linkUrl  = ''
+      this.closeCreateLinkModal()
+    },
+    handleChange(val){
+      this.page.offset = val
+      this.searchJournal()
+    },
+    closeCreateLinkModal(){
+      this.$emit('closeCreateLinkModal')
+    },
+    changeActiveLi(index){
+      this.activeIndex = index
+      if (this.activeIndex == 0){
+        this.page.limit  = 10
+        this.page.offset = 1
         this.searchJournal()
-      },
-      closeCreateLinkModal() {
-        this.$emit('closeCreateLinkModal')
-      },
-      changeActiveLi(index) {
-        this.activeIndex = index
-        if (this.activeIndex == 0) {
-          this.page.limit = 10
-          this.page.offset = 1
-          this.searchJournal()
-        }
-      },
-      searchJournal() {
-        getJournalPage(this.page).then(json => {
-          this.journalList = json.data.rows
-          this.page.totalNum = json.data.total
-        })
-      },
-      fillLinkName(val) {
-        this.linkName = val.title
-        this.linkUrl = global.CMSHOST + `/api/preViewJournal/` + val.id
-      },
-      fillAttachmentLinkName(val) {
-        this.linkName = val.name
-        this.linkUrl = val.source
       }
     },
+    searchJournal(){
+      // getJournalPage(this.page).then(json=>{
+      //   this.journalList = json.data.rows
+      //   this.page.totalNum = json.data.total
+      // })
+    },
+    fillLinkName(val){
+      this.linkName = val.title
+      this.linkUrl  = global.EPCMS+`/preViewJournal/`+val.id
+    },
+    fillAttachmentLinkName(val){
+      this.linkName = val.name
+      this.linkUrl  = val.source
+    }
+  },
+  created() {
+    this.searchJournal()
   }
+}
 </script>
 
 <style scoped lang="less">
-  .right-container {
+  .right-container{
     position: relative;
     background: #fff;
     -webkit-box-sizing: border-box;
@@ -126,13 +174,13 @@
     padding: 10px 10px 20px 10px;
     width: 75%;
 
-    & div .table-container {
+    & div .table-container{
       height: 415px;
       overflow: auto;
     }
   }
 
-  .field-group {
+  .field-group{
     box-sizing: border-box;
     clear: both;
     padding: 4px 0 4px 145px;
@@ -141,7 +189,7 @@
     width: 100%;
   }
 
-  .li-btn {
+  .li-btn{
     background: none;
     border: 0;
     color: #3572b0;
@@ -154,34 +202,33 @@
     text-align: left;
     text-decoration: none;
     width: 100%;
-
-    &.selected {
+    &.selected{
       color: black;
       font-weight: bold;
     }
   }
 
-  .left-container {
-    background: #fff;
-    border-right: 1px solid #ccc;
-    box-sizing: border-box;
-    float: left;
-    height: 100%;
-    list-style: none;
-    margin: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 10px 10px 20px 10px;
-    width: 25%;
+  .left-container{
+      background: #fff;
+      border-right: 1px solid #ccc;
+      box-sizing: border-box;
+      float: left;
+      height: 100%;
+      list-style: none;
+      margin: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 10px 10px 20px 10px;
+      width: 25%;
   }
 
-  .body-containter {
+  .body-containter{
     height: 550px;
     border-top: 1px solid #ccc;
     display: block;
   }
 
-  .meta {
+  .meta{
     border-top: 1px solid #ccc;
     box-sizing: border-box;
     clear: both;
@@ -200,12 +247,12 @@
     font-size: 13px;
   }
 
-  .meta-btn-container {
+  .meta-btn-container{
     float: right;
     margin-right: 10px;
   }
 
-  .meta-link {
+  .meta-link{
     border-top: 1px solid #ccc;
     font-size: 13px;
   }

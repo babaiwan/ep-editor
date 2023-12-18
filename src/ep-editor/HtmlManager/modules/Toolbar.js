@@ -31,6 +31,7 @@ export class Toolbar {
         const container = document.createElement('div')
         const innerDiv = document.createElement('div')
         const htmlButton = document.createElement('a')
+        const deleteButton = document.createElement('a')
         container.className = 'toolbar'
         container.style = 'border: 1px solid #ccc;\n' +
             '    background-color: #f5f5f5;\n' +
@@ -39,7 +40,7 @@ export class Toolbar {
             '    overflow: auto;'
         innerDiv.style = 'white-space: nowrap;'
         htmlButton.innerHTML = '编辑html'
-        htmlButton.style = '    box-sizing: border-box;\n' +
+        htmlButton.style = 'box-sizing: border-box;\n' +
             '    background: #f5f5f5;\n' +
             '    border: 1px solid #ccc;\n' +
             '    border-radius: 3.01px;\n' +
@@ -59,16 +60,42 @@ export class Toolbar {
             '    white-space: nowrap;\n' +
             '    float:left;\n' +
             '    margin-right: 10px;'
+        deleteButton.innerHTML = '删除'
+        deleteButton.style = 'box-sizing: border-box;\n' +
+            '    background: #f5f5f5;\n' +
+            '    border: 1px solid #ccc;\n' +
+            '    border-radius: 3.01px;\n' +
+            '    color: #333;\n' +
+            '    cursor: pointer;\n' +
+            '    display: inline-block;\n' +
+            '    font-family: inherit;\n' +
+            '    font-size: 14px;\n' +
+            '    font-variant: normal;\n' +
+            '    font-weight: normal;\n' +
+            '    height: 2.14285714em;\n' +
+            '    line-height: 1.42857143;\n' +
+            '    padding: 4px 10px;\n' +
+            '    text-decoration: none;\n' +
+            '    vertical-align: baseline;\n' +
+            '    white-space: nowrap;\n' +
+            '    float:left;\n' +
+            '    margin-right: 10px;'
+
         container.appendChild(innerDiv)
         innerDiv.appendChild(htmlButton)
+        innerDiv.appendChild(deleteButton)
         this.domNode.appendChild(container)
 
         htmlButton.addEventListener('click',()=>{
-            console.log('htmlManager:')
-            console.log(this.htmlManager)
             this.htmlManager.htmlBlock.removeChild(this.domNode)
             this.domNode = undefined
             this.htmlManager.quill.openHtmlEditor(this.htmlManager.htmlBlock.innerHTML)
+        })
+
+        deleteButton.addEventListener('click',()=>{
+            this.htmlManager.htmlBlock.removeChild(this.domNode)
+            this.domNode = undefined
+            this.htmlManager.quill.deleteHtmlBlock(this.htmlManager.htmlBlock)
         })
     }
 

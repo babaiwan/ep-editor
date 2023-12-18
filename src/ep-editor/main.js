@@ -7,14 +7,9 @@ import {registerFontSize} from "./Font/fontSize";
 import {registerFontFamily} from "./Font/fontFamily";
 import {registerLineHeight} from "./LineHeight/lineHeight"
 import {registerTextIndent} from "./Indent/Indent";
-import ImageUploader from "./ImageUploader/quill.imageUploader";
+import {registerImageUploader} from "./ImageUploader/quill.imageUploader";
 import {registerImageBlot} from './ImageUploader/loadingImage';
-
-// import {upload} from "../../api";
-
-function registerImageUploader(Quill) {
-  Quill.register("modules/imageUploader", ImageUploader);
-}
+import {registerMention} from "./quillMention/quill.mention";
 
 function registerTable(Quill) {
   Quill.register({'modules/better-table': QuillBetterTable}, true)
@@ -239,7 +234,8 @@ export const options = {
           }
         });
       }
-    },  // use imageUploader instandOf uploader
+    },
+    // use imageUploader instandOf uploader
     uploader: {
       handler: function (range, files) {
         console.log('do nothing')
@@ -247,10 +243,37 @@ export const options = {
     },
     keyboard: {
       bindings: bindings
+    },
+    mention: {
+      allowedChars: /^[A-Za-z\sÅÄÖåäö\u4e00-\u9fff]*$/,
+      mentionDenotationChars: ["@", "#"],
+      spaceAfterInsert: true,
+      source: async function(searchTerm, renderList) {
+        const matchedPeople = await suggestPeople(searchTerm);
+        renderList(matchedPeople);
+      }
     }
   },
   placeholder: 'Insert text here ...',
   readOnly: false
+}
+
+// ajax 请求查询员工
+async function suggestPeople(searchName) {
+  // let result = []
+  // await getEmployeeList({filter:searchName,limit:10}).then(json=>{
+  //   for (let employee of json.data){
+  //     result.push({
+  //       id:employee.code,
+  //       value:employee.name
+  //     })
+  //   }
+  // })
+  let result = [
+    {id:'1',value:'测试1'},
+    {id:'1',value:'测试2'}
+  ]
+  return result
 }
 
 export function initEpEditor(Quill) {
@@ -266,4 +289,5 @@ export function initEpEditor(Quill) {
   registerColor(Quill);
   registerLinkBlot(Quill);
   registerLineHeight(Quill);
+  registerMention(Quill);
 }

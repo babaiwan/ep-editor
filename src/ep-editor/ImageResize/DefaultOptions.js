@@ -39,7 +39,7 @@ export default {
         cursor: 'default',
     },
     toolbarStyles: {
-        position: 'absolute',
+        // position: 'absolute',
         top: '-55px',
         right: '0',
         left: '0',
